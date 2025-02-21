@@ -75,19 +75,20 @@ async function run() {
         // update by put //
         app.put('/update/:id', async (req, res) => {
             const id = req.params.id;
-            const { category } = req.body;
+            const updateData = req.body; // Get all updated fields
 
             const query = { _id: new ObjectId(id) };
-            const updateData = { $set: { category } };
+            const updateDocument = { $set: updateData };
 
             try {
-                const result = await taskCollection.updateOne(query, updateData);
+                const result = await taskCollection.updateOne(query, updateDocument);
                 res.send(result);
             } catch (error) {
-                console.error("Error updating task category:", error);
-                res.status(500).send({ error: "Failed to update task category" });
+                console.error("Error updating task:", error);
+                res.status(500).send({ error: "Failed to update task" });
             }
         });
+
 
 
 
