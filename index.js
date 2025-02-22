@@ -24,9 +24,8 @@ const client = new MongoClient(uri, {
 
 async function run() {
     try {
-        // Connect the client to MongoDB
-        await client.connect();
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        // await client.connect();
+        // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
         const db = client.db('taskmanagement');
         const taskCollection = db.collection('tasks');
@@ -75,7 +74,7 @@ async function run() {
         // update by put //
         app.put('/update/:id', async (req, res) => {
             const id = req.params.id;
-            const updateData = req.body; // Get all updated fields
+            const updateData = req.body;
 
             const query = { _id: new ObjectId(id) };
             const updateDocument = { $set: updateData };
@@ -92,12 +91,11 @@ async function run() {
 
 
 
-    } catch (error) {
-        console.error("Error connecting to MongoDB:", error);
+    } finally {
+
     }
 }
 
-// Run the connection function (don't close the client)
 run();
 
 // Default route
